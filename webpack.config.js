@@ -11,8 +11,6 @@ const baseConfig = {
     path: resolve('dist'),
     filename: 'boundle.js'
   },
-  mode: 'development',
-  devtool: 'source-map',
   module: {
     rules: [
       {
@@ -22,21 +20,18 @@ const baseConfig = {
       }
     ]
   },
+  plugins: [
+    new CleanWebpackPlugin(),
+  ]
+}
+
+const devConfig = merge(baseConfig, {
+  devtool: 'source-map',
+  mode: 'development',
   devServer: {
     port: 9999,
     host: 'localhost',
     contentBase: resolve('dist')
-  },
-  plugins: [
-    new CleanWebpackPlugin()
-  ]
-}
-
-const browerConfig = merge(baseConfig, {
-  entry: './src/index.js',
-  target: 'web',
-  output: {
-    filename: 'web/utils.web.js'
   },
   plugins: [
     new HtmlWebpackPlugin({
@@ -46,12 +41,16 @@ const browerConfig = merge(baseConfig, {
   ]
 })
 
-const nodeConfig = merge(baseConfig, {
-  entry: './src/lib/index.js',
-  target: 'node',
+const buildConfig = merge(baseConfig, {
+  entry: './src/index.js',
+  mode: 'none',
+  target: 'web',
   output: {
-    filename: 'node/utils.node.js'
+    filename: 'wwl-utils.umd.js',
+    libraryTarget: 'umd',
+    library: 'wwlUtils',
+    globalObject: 'this'
   }
 })
 
-module.exports = process.env.target === 'node' ? nodeConfig : browerConfig
+module.exports = process.env.NODE_ENV === 'development' ? devConfig : buildConfig

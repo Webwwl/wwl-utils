@@ -1,16 +1,18 @@
 {
-  "name": "wwl-utils",
-  "version": "1.0.0",
+  "name": "webwwl-utils",
+  "version": "1.0.2",
   "description": "",
-  "main": "index.js",
+  "main": "dist/wwl-utils.umd.js",
+  "module": "src/index.js",
   "scripts": {
     "test": "jest test/**/*.test.js",
     "dev": "webpack-dev-server --config webpack.config.js",
-    "build:node": "cross-env target=node webpack --config webpack.config.js",
-    "build:web": "cross-env target=web webpack --config webpack.config.js"
+    "build": "webpack --config webpack.config.js"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "webwwl-utils"
+  ],
+  "author": "webwwl",
   "license": "ISC",
   "devDependencies": {
     "@babel/core": "^7.6.4",
